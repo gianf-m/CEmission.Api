@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CO2.DbMigrator\CO2.DbMigrator.csproj" />
     <ProjectReference Include="..\CO2.EntityFramework\CO2.EntityFramework.csproj" />
   </ItemGroup>
 

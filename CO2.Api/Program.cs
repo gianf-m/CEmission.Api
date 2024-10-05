@@ -1,4 +1,5 @@
 using CO2.Api;
+using CO2.DbMigrator;
 using CO2.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -70,9 +71,14 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseExceptionHandler();
+
 if (builder.Configuration.GetValue<bool>("App:EnableCors")) {
     app.UseCors();
 }
 app.MapControllers();
+
+if (builder.Configuration.GetValue<bool>("App:ExecuteMigrations")) {
+    app.MigrateDatabase();
+}
 
 app.Run();
