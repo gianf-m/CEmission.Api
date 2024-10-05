@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace CO2.Emissions {
     public class EmissionsConsts {
-        //public const int ObservacionMinLength = 0;
-        //public const int ObservacionMaxLength = 1000;
+        public const int TypeMinLength = 0;
+        public const int TypenMaxLength = 2500;
+        public const int DescriptionMinLength = 0;
+        public const int DescriptionMaxLength = 2500;
     }
 }

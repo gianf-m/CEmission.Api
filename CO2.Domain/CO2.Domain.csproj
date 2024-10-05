@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CO2.Domain.Shared\CO2.Domain.Shared.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -22,4 +22,8 @@
     <Folder Include="Controllers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CO2.EntityFramework\CO2.EntityFramework.csproj" />
+  </ItemGroup>
+
 </Project>

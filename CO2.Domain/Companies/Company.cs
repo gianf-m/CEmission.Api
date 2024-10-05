@@ -7,21 +7,21 @@ using System.Threading.Tasks;
 namespace CO2.Companies {
     public class Company {
         public virtual int Id { get; set; }
-        public virtual string Nombre { get; set; }
-        public virtual DateTime FechaDeCreacion { get; protected set; }
-        public virtual bool EstaInactiva { get; protected set; }
-        public virtual DateTime FechaDesactivacion { get; protected set; }
+        public virtual string Name { get; set; }
+        public virtual DateTime CreationTime { get; protected set; }
+        public virtual bool IsDeleted { get; protected set; }
+        public virtual DateTime DeletionTime { get; protected set; }
 
         public Company() {
-            Nombre = string.Empty;
-            FechaDeCreacion = DateTime.Now.Date;
-            EstaInactiva = true;
-            FechaDesactivacion = new DateTime(1900, 01, 01);
+            Name = string.Empty;
+            CreationTime = DateTime.Now.Date;
+            IsDeleted = true;
+            DeletionTime = new DateTime(1900, 01, 01);
         }
 
         public void DesactivarEmpresa() {
-            FechaDesactivacion = DateTime.Now;
-            EstaInactiva = true;
+            DeletionTime = DateTime.Now;
+            IsDeleted = true;
         }
        
     }
