@@ -10,4 +10,9 @@
     <PackageReference Include="AutoMapper" Version="13.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CO2.Application.Contracs\CO2.Application.Contracts.csproj" />
+    <ProjectReference Include="..\CO2.EntityFramework\CO2.EntityFramework.csproj" />
+  </ItemGroup>
+
 </Project>

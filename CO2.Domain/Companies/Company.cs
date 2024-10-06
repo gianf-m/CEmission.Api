@@ -11,18 +11,23 @@ namespace CO2.Companies {
         public virtual DateTime CreationTime { get; protected set; }
         public virtual bool IsDeleted { get; protected set; }
         public virtual DateTime DeletionTime { get; protected set; }
-
         public Company() {
             Name = string.Empty;
             CreationTime = DateTime.Now.Date;
-            IsDeleted = true;
+            IsDeleted = false;
             DeletionTime = new DateTime(1900, 01, 01);
         }
 
-        public void DesactivarEmpresa() {
+        public void DeleteCompany() {
             DeletionTime = DateTime.Now;
             IsDeleted = true;
         }
-       
+        public Company(string valName) {
+            Name = valName;
+            CreationTime = DateTime.Now.Date;
+            IsDeleted = false;
+            DeletionTime = new DateTime(1900, 01, 01);
+        }
+
     }
 }

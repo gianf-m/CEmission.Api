@@ -5,8 +5,8 @@ namespace CO2.Application {
         public class MapperConfig {
             public static Mapper InitializeAutomapper() {
                 var config = new MapperConfiguration(cfg => {
-                    cfg.AddProfile<OrganizationProfile>();
-                    cfg.AddProfile(new OrganizationProfile());
+                    cfg.AddProfile<CO2ApiProfile>();
+                    cfg.AddProfile(new CO2ApiProfile());
                 });
                 var mapper = new Mapper(config);
                 return mapper;

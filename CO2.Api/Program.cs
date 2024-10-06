@@ -1,5 +1,7 @@
 using CO2.Api;
+using CO2.Companies;
 using CO2.DbMigrator;
+using CO2.Emissions;
 using CO2.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -15,6 +17,14 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<ApiDbContext>(options => options.UseMySQL(builder.Configuration.GetConnectionString("Default")));
+
+#region Dependency Injection
+
+builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
+builder.Services.AddScoped<ICompanyAppServices, CompanyAppServices>();
+builder.Services.AddScoped<IEmissionAppServices, EmissionAppServices>();
+
+#endregion
 
 #region Logger Config
 Log.Logger = new LoggerConfiguration()
@@ -32,7 +42,6 @@ Log.Logger = new LoggerConfiguration()
 
     .CreateLogger();
 #endregion
-
 
 #region GlobalExceptionHandler
 
