@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CEmission.EntityFramework",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CEmission.DbMigrator", "..\CEmission.DbMigrator\CEmission.DbMigrator.csproj", "{DC487EBD-5049-43C0-9561-6B6C057E3712}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testing", "..\Testing\Testing.csproj", "{2997A6DC-7D95-43F9-95D1-F7C7E71E79B5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{DC487EBD-5049-43C0-9561-6B6C057E3712}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC487EBD-5049-43C0-9561-6B6C057E3712}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC487EBD-5049-43C0-9561-6B6C057E3712}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2997A6DC-7D95-43F9-95D1-F7C7E71E79B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2997A6DC-7D95-43F9-95D1-F7C7E71E79B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2997A6DC-7D95-43F9-95D1-F7C7E71E79B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2997A6DC-7D95-43F9-95D1-F7C7E71E79B5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

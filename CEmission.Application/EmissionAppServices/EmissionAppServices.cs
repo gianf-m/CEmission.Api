@@ -29,9 +29,8 @@ namespace CEmission.Emissions {
             await _emissionRepository.UpdateAsync(vEmission);
         }
 
-        public virtual async Task<EmissionDto> CreateAsync(EmissionCreateDto valEmissionCreateDto, int valCompanyId) {
+        public virtual async Task<EmissionDto> CreateAsync(EmissionCreateDto valEmissionCreateDto) {
             Emission vNewEmission = ObjectMapper.Map<Emission>(valEmissionCreateDto);
-            vNewEmission.CompanyId = valCompanyId;
             vNewEmission = await _emissionRepository.CreateAsync(vNewEmission);
             return ObjectMapper.Map<EmissionDto>(vNewEmission);
         }

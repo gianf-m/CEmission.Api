@@ -133,3 +133,6 @@ if (builder.Configuration.GetValue<bool>("App:ExecuteMigrations")) {
 }
 
 app.Run();
+
+
+public partial class Program { }

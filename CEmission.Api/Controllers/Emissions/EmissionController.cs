@@ -9,7 +9,7 @@ namespace CEmission.Emissions {
     [Area("app")]
     [ControllerName("Emissions")]
     [Route("api/app/")]
-    //[Authorize]
+    [Authorize]
     public class EmissionController : Controller {
         private readonly IEmissionAppServices _emissionAppServices;
         public EmissionController(IEmissionAppServices emissionAppServices) {
@@ -31,8 +31,8 @@ namespace CEmission.Emissions {
 
         [HttpPost]
         [Route("emission")]
-        public Task<EmissionDto> CreateAsync(EmissionCreateDto valEmissionUpdateDto, int valCompanyId) {
-            return _emissionAppServices.CreateAsync(valEmissionUpdateDto, valCompanyId);
+        public Task<EmissionDto> CreateAsync(EmissionCreateDto valEmissionUpdateDto) {
+            return _emissionAppServices.CreateAsync(valEmissionUpdateDto);
         }
 
         [HttpPut]

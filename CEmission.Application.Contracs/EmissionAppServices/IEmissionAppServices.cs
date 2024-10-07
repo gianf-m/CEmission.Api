@@ -9,7 +9,7 @@ namespace CEmission.Emissions {
     public interface IEmissionAppServices {
         Task<EmissionDto> GetAsync(int Id);
         Task UpdateAsync(int Id, EmissionUpdateDto valEmissionUpdateDto);
-        Task<EmissionDto> CreateAsync(EmissionCreateDto valEmissionCreateDto, int valCompanyId);
+        Task<EmissionDto> CreateAsync(EmissionCreateDto valEmissionCreateDto);
         Task DeleteAsync(int Id);
         Task<List<EmissionDto>> GetListAsync(int companyId);
         Task<PagedListDto<EmissionDto>> GetPagedListAsync(EmissionFilterDto valFilterDto);
