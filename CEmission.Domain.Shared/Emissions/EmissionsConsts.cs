@@ -4,11 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CEmission.Emissions {
-    public class EmissionsConsts {
-        public const int TypeMinLength = 0;
-        public const int TypenMaxLength = 2500;
-        public const int DescriptionMinLength = 0;
-        public const int DescriptionMaxLength = 2500;
+namespace CEmission.IdentityUsers {
+    public class IdentityUsersConsts {
+        public const int UsernameMinLength = 1;
+        public const int UsernameMaxLength = 100;
+        
+        public const int EmailMinLength = 1;
+        public const int EmailMaxLength = 100;
+        
+        public const int PasswordHashMinLength = 1;
+        public const int PasswordHashMaxLength = 2500;
+        
+        public const int PhoneNumberMinLength = 1;
+        public const int PhoneNumberMaxLength = 15;
+
     }
 }

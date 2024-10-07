@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CEmission.Companies;
 using CEmission.Emissions;
+using CEmission.IdentityUsers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace CEmission.Application {
             CreateMap<Emission, EmissionDto>();
             CreateMap<EmissionCreateDto, Emission>();
             CreateMap<EmissionUpdateDto, Emission>();
+            CreateMap<IdentityUser, IdentityUserDto>();
         }
     }
 }

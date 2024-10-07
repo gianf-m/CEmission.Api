@@ -22,8 +22,8 @@ namespace CEmission.EntityFramework {
 
         public ApiDbContext CreateDbContext(string[] args) {
 
-            string filePath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).ToString(), "CO2.Api", "CO2.Api");
-
+            string filePath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).ToString(), "CEmission.Api", "CEmission.Api");
+                
             IConfiguration Configuration = new ConfigurationBuilder()
                .SetBasePath(Path.GetDirectoryName(filePath))
                .AddJsonFile("appSettings.json")

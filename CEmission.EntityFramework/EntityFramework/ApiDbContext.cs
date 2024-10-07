@@ -1,6 +1,7 @@
 ﻿using CEmission.Companies;
 using CEmission.Domain;
 using CEmission.Emissions;
+using CEmission.IdentityUsers;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ namespace CEmission.EntityFramework {
         #region DbSets
         public DbSet<Company>  Companies { get; set; }
         public DbSet<Emission> Emissions { get; set; }
+        public DbSet<IdentityUser> IdentityUsers { get; set; } //Custom IdentityUser Entity
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
@@ -39,6 +41,19 @@ namespace CEmission.EntityFramework {
                 b.Property(x => x.Type).HasColumnName(nameof(Emission.Type)).HasColumnType("varchar").HasMaxLength(EmissionsConsts.TypenMaxLength).IsRequired();
                 b.Property(x => x.CreationTime).HasColumnName(nameof(Emission.CreationTime)).IsRequired();
                 b.HasOne<Company>().WithMany().HasForeignKey(x => x.CompanyId);
+            });
+
+            modelBuilder.Entity<IdentityUser>(b => {
+                b.ToTable(DomainConsts.DbTablePrefix + "IdentityUsers", DomainConsts.DbSchema);
+                b.Property(x => x.Id).HasColumnName(nameof(IdentityUser.Id)).IsRequired();
+                b.Property(x => x.UserName).HasColumnName(nameof(IdentityUser.UserName)).HasColumnType("varchar").HasMaxLength(IdentityUsersConsts.UsernameMaxLength).IsRequired();
+                b.Property(x => x.NormalizedUserName).HasColumnName(nameof(IdentityUser.NormalizedUserName)).HasColumnType("varchar").HasMaxLength(IdentityUsersConsts.UsernameMaxLength).IsRequired();
+                b.Property(x => x.Email).HasColumnName(nameof(IdentityUser.Email)).HasColumnType("varchar").HasMaxLength(IdentityUsersConsts.EmailMaxLength).IsRequired();
+                b.Property(x => x.NormalizedEmail).HasColumnName(nameof(IdentityUser.NormalizedEmail)).HasColumnType("varchar").HasMaxLength(IdentityUsersConsts.EmailMaxLength).IsRequired();
+                b.Property(x => x.PasswordHash).HasColumnName(nameof(IdentityUser.PasswordHash)).HasColumnType("varchar").HasMaxLength(IdentityUsersConsts.PasswordHashMaxLength).IsRequired();
+                b.Property(x => x.PhoneNumber).HasColumnName(nameof(IdentityUser.PhoneNumber)).HasColumnType("varchar").HasMaxLength(IdentityUsersConsts.PhoneNumberMaxLength).IsRequired();
+                b.HasIndex(x => new { x.UserName }).IsUnique().HasDatabaseName("IX_" + DomainConsts.DbTablePrefix + "IdentityUsers_UserName");
+                b.HasIndex(x => new { x.Email }).IsUnique().HasDatabaseName("IX_" + DomainConsts.DbTablePrefix + "IdentityUsers_Email");
             });
         }
 

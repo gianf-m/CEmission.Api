@@ -1,12 +1,14 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Asp.Versioning;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CEmission.Emissions {
 
     [Area("app")]
     [ControllerName("Emissions")]
     [Route("api/app/")]
+    [Authorize]
     public class EmissionController : Controller, IEmissionAppServices {
         private readonly IEmissionAppServices _emissionAppServices;
         public EmissionController(IEmissionAppServices emissionAppServices) {
@@ -50,4 +52,5 @@ namespace CEmission.Emissions {
             return _emissionAppServices.GetByCompanyIdAsync(CompanyId);
         }
     }
+
 }
