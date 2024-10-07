@@ -2,14 +2,15 @@
 using Microsoft.AspNetCore.Mvc;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Authorization;
+using CEmission.Shared;
 
 namespace CEmission.Emissions {
 
     [Area("app")]
     [ControllerName("Emissions")]
     [Route("api/app/")]
-    [Authorize]
-    public class EmissionController : Controller, IEmissionAppServices {
+    //[Authorize]
+    public class EmissionController : Controller {
         private readonly IEmissionAppServices _emissionAppServices;
         public EmissionController(IEmissionAppServices emissionAppServices) {
             _emissionAppServices = emissionAppServices;
@@ -17,9 +18,9 @@ namespace CEmission.Emissions {
 
         [HttpGet]
         [Route("emission")]
-        public Task<List<EmissionDto>> GetListAsync(EmissionFilterDto valFilterDto) {
+        public Task<PagedListDto<EmissionDto>> GetPagedListAsync(EmissionFilterDto valFilterDto) {
             //Se agrego filtrado opcional para el listar del GetList
-            return _emissionAppServices.GetListAsync(valFilterDto);
+            return _emissionAppServices.GetPagedListAsync(valFilterDto);
         }
 
         [HttpGet]
@@ -47,9 +48,16 @@ namespace CEmission.Emissions {
         }
 
         [HttpGet]
-        [Route("emission/company/{CompanyId}")]
-        public Task<List<EmissionDto>> GetByCompanyIdAsync(int CompanyId) {
-            return _emissionAppServices.GetByCompanyIdAsync(CompanyId);
+        [Route("emission/company/{companyId}")]
+        public Task<List<EmissionDto>> GetListAsync(int companyId) {
+            return _emissionAppServices.GetListAsync(companyId);
+        }
+
+        [HttpGet]
+        [Route("emission/Excel")]
+        public async Task<ActionResult> GetEmissionExcelAsync(string valType, DateTime? valEmissionDate) {
+            byte[] vDocument = await _emissionAppServices.GetEmissionExcelAsync(valType, valEmissionDate);
+            return File(vDocument, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"Emissions_{DateTime.Now.Year}_{DateTime.Now.Month}_{DateTime.Now.Day}_{DateTime.Now.Minute}_{DateTime.Now.Second}.xlsx");
         }
     }
 

@@ -1,8 +1,12 @@
 ﻿using AutoMapper;
 using CEmission.Companies;
+using CEmission.Shared;
+using ClosedXML.Excel;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using static CEmission.Application.AutoMapper;
@@ -36,13 +40,56 @@ namespace CEmission.Emissions {
             await _emissionRepository.DeleteAsync(Id);
         }
 
-        public virtual async Task<List<EmissionDto>> GetListAsync(EmissionFilterDto valFilterDto) {
-            return ObjectMapper.Map<List<EmissionDto>>(await _emissionRepository.GetListAsync(valFilterDto.CompanyId, valFilterDto.Type, valFilterDto.EmissionDateMin, valFilterDto.EmissionDateMax));
+        public virtual async Task<List<EmissionDto>> GetListAsync(int companyId) {
+            return ObjectMapper.Map<List<EmissionDto>>(await _emissionRepository.GetListAsync(companyId));
         }
 
-        public virtual async Task<List<EmissionDto>> GetByCompanyIdAsync(int CompanyId) {
-            return ObjectMapper.Map<List<EmissionDto>>(await _emissionRepository.GetListAsync(CompanyId, string.Empty, null, null));
+        public virtual async Task<PagedListDto<EmissionDto>> GetPagedListAsync(EmissionFilterDto valFilterDto) {
+            if (!valFilterDto.Page.HasValue || valFilterDto.Page <= 0) {
+                valFilterDto.Page = 1;
+            }
+            return ObjectMapper.Map<PagedListDto<EmissionDto>>(await _emissionRepository.GetPagedListAsync(valFilterDto.CompanyId, valFilterDto.Type, valFilterDto.EmissionDateMin, valFilterDto.EmissionDateMax, (int)valFilterDto.Page));
         }
+
+        public virtual async Task<byte[]> GetEmissionExcelAsync(string valType, DateTime? valEmissionDate) {
+            using (XLWorkbook wb = new XLWorkbook()) {
+                DataTable vDataTable = await GetEmissionsTableAsync(valType, valEmissionDate);
+                wb.AddWorksheet(vDataTable, "Emissions");
+                wb.ColumnWidth = 65;
+                using (MemoryStream ms = new MemoryStream()) {
+                    wb.SaveAs(ms);
+                    return ms.ToArray();
+                }
+            }
+        }
+
+        private async Task<DataTable> GetEmissionsTableAsync(string valType, DateTime? valEmissionDate) {
+            List<Emission> vTable = await _emissionRepository.GetEmissionsForExcelAsync(valType, valEmissionDate);
+            DataTable vDt = GetTableExcel();
+            foreach (var vItem in vTable) {
+                DataRow vDr = vDt.NewRow();
+                vDr["Id"] = vItem.Id.ToString();
+                vDr["CompanyId"] = vItem.CompanyId.ToString();
+                vDr["Description"] = vItem.Description;
+                vDr["Quantity"] = Math.Round(vItem.Quantity, 2).ToString();
+                vDr["EmissionDate"] = vItem.EmissionDate.Date.ToString("dd/MM/yyyy");
+                vDr["Type"] = vItem.Type;
+                vDt.Rows.Add(vDr);
+            }
+            return vDt;
+        }
+
+        private DataTable GetTableExcel() {
+            DataTable vDt = new DataTable();
+            vDt.Columns.Add("Id", typeof(string));
+            vDt.Columns.Add("CompanyId", typeof(string));
+            vDt.Columns.Add("Description", typeof(string));
+            vDt.Columns.Add("Quantity", typeof(string));
+            vDt.Columns.Add("EmissionDate", typeof(string));
+            vDt.Columns.Add("Type", typeof(string));
+            return vDt;
+        }
+
 
     }
 }

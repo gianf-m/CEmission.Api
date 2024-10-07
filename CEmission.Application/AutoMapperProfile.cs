@@ -2,6 +2,7 @@
 using CEmission.Companies;
 using CEmission.Emissions;
 using CEmission.IdentityUsers;
+using CEmission.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace CEmission.Application {
             CreateMap<EmissionCreateDto, Emission>();
             CreateMap<EmissionUpdateDto, Emission>();
             CreateMap<IdentityUser, IdentityUserDto>();
+            CreateMap<PagedList<Emission>, PagedListDto<EmissionDto>>();
         }
     }
 }

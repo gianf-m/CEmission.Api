@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CEmission.Shared;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,8 @@ namespace CEmission.Emissions {
         Task UpdateAsync(int Id, EmissionUpdateDto valEmissionUpdateDto);
         Task<EmissionDto> CreateAsync(EmissionCreateDto valEmissionCreateDto, int valCompanyId);
         Task DeleteAsync(int Id);
-        Task<List<EmissionDto>> GetListAsync(EmissionFilterDto valFilterDto);
-        Task<List<EmissionDto>> GetByCompanyIdAsync(int CompanyId);
+        Task<List<EmissionDto>> GetListAsync(int companyId);
+        Task<PagedListDto<EmissionDto>> GetPagedListAsync(EmissionFilterDto valFilterDto);
+        Task<byte[]> GetEmissionExcelAsync(string valType, DateTime? valEmissionDate);
     }
 }

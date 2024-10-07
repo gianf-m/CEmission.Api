@@ -2,12 +2,14 @@
 using Microsoft.AspNetCore.Mvc;
 using Asp.Versioning;
 using CEmission.Companies;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CEmission.Companies {
 
     [Area("app")]
     [ControllerName("Company")]
     [Route("api/app/company")]
+    [Authorize]
     public class CompanyController : Controller, ICompanyAppServices {
         private readonly ICompanyAppServices _companyAppServices;
         public CompanyController(ICompanyAppServices companyAppServices) {

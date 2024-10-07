@@ -8,6 +8,7 @@ namespace CEmission.IdentityUsers {
     [Area("app")]
     [ControllerName("IdentityUser")]
     [Route("api/app/identityUser")]
+    [Authorize]
     public class IdentityUserController : Controller, IIdentityUserAppServices {
         private readonly IIdentityUserAppServices _identityUserAppServices;
         public IdentityUserController(IIdentityUserAppServices identityUserAppServices) {

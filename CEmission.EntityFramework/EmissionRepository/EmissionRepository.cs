@@ -1,5 +1,6 @@
 ﻿using CEmission.Companies;
 using CEmission.EntityFramework;
+using CEmission.Shared;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -56,11 +57,32 @@ namespace CEmission.Emissions {
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<List<Emission>> GetListAsync(int? valCompanyId, string valType, DateTime? valEmissionDateMin, DateTime? valEmissionDateMax) {
-            var query = _dbContext.Emissions.WhereIf(valCompanyId.HasValue && valCompanyId != 0, x => x.CompanyId == valCompanyId)
-                                            .WhereIf(!string.IsNullOrEmpty(valType), x => x.Type.Contains(valType))
-                                            .WhereIf(valEmissionDateMin.HasValue, x => x.EmissionDate.Date >= valEmissionDateMin.Value.Date)
-                                            .WhereIf(valEmissionDateMax.HasValue, x => x.EmissionDate.Date <= valEmissionDateMax.Value.Date);
+        public async Task<List<Emission>> GetListAsync(int valCompanyId) {
+            var query = _dbContext.Emissions.WhereIf(valCompanyId != 0, x => x.CompanyId == valCompanyId);
+            return query.ToList();
+        }
+
+        public async Task<PagedList<Emission>> GetPagedListAsync(int? valCompanyId, string valType, DateTime? valEmissionDateMin, DateTime? valEmissionDateMax, int valPage) {
+            var query = _dbContext.Emissions.AsQueryable();
+            query = ApplyFilter(query, valCompanyId, valType, valEmissionDateMin, valEmissionDateMax);
+            return new PagedList<Emission> {
+                List = await query.Skip((valPage - 1) * 10).Take(10).ToListAsync(),
+                Count = query.Count()
+            };
+        }
+
+        protected virtual IQueryable<Emission> ApplyFilter(IQueryable<Emission> query, int? valCompanyId, string valType, DateTime? valEmissionDateMin, DateTime? valEmissionDateMax) {
+            return query.WhereIf(valCompanyId.HasValue && valCompanyId != 0, x => x.CompanyId == valCompanyId)
+                        .WhereIf(!string.IsNullOrEmpty(valType), x => x.Type.Contains(valType))
+                        .WhereIf(valEmissionDateMin.HasValue, x => x.EmissionDate.Date >= valEmissionDateMin.Value.Date)
+                        .WhereIf(valEmissionDateMax.HasValue, x => x.EmissionDate.Date <= valEmissionDateMax.Value.Date);
+
+        }
+
+        public async Task<List<Emission>> GetEmissionsForExcelAsync(string valType, DateTime? valEmissionDate) {
+            var query = _dbContext.Emissions.AsQueryable();
+            query = ApplyFilter(query, null, valType, null, null)
+                    .WhereIf(valEmissionDate.HasValue, x => x.EmissionDate.Date == valEmissionDate.Value.Date);
             return await query.ToListAsync();
         }
 
