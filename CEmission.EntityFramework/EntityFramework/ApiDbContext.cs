@@ -36,7 +36,7 @@ namespace CEmission.EntityFramework {
                 b.ToTable(DomainConsts.DbTablePrefix + "Emissions", DomainConsts.DbSchema);
                 b.Property(x => x.Id).HasColumnName(nameof(Emission.Id)).IsRequired();
                 b.Property(x => x.Description).HasColumnName(nameof(Emission.Description)).HasColumnType("varchar").HasMaxLength(EmissionsConsts.DescriptionMaxLength).IsRequired();
-                b.Property(x => x.Quantity).HasColumnName(nameof(Emission.Quantity)).IsRequired();
+                b.Property(x => x.Quantity).HasColumnName(nameof(Emission.Quantity)).HasPrecision(18, 2).HasColumnType("decimal(18,2)").IsRequired();
                 b.Property(x => x.EmissionDate).HasColumnName(nameof(Emission.EmissionDate)).IsRequired();
                 b.Property(x => x.Type).HasColumnName(nameof(Emission.Type)).HasColumnType("varchar").HasMaxLength(EmissionsConsts.TypenMaxLength).IsRequired();
                 b.Property(x => x.CreationTime).HasColumnName(nameof(Emission.CreationTime)).IsRequired();
