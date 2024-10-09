@@ -1,6 +1,7 @@
 ﻿using CEmission.Emissions;
 using CEmission.EntityFramework;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +11,10 @@ using System.Threading.Tasks;
 namespace CEmission.Companies {
     public class CompanyRepository: ICompanyRepository {
         private readonly ApiDbContext _dbContext;
-        public CompanyRepository(ApiDbContext dbContext) {
+        private readonly IStringLocalizer<ICompanyRepository> L;
+        public CompanyRepository(ApiDbContext dbContext, IStringLocalizer<ICompanyRepository> l) {
             _dbContext = dbContext;
+            L = l;
         }
 
         public async Task<Company> GetAsync(int valId) {
@@ -21,7 +24,7 @@ namespace CEmission.Companies {
         private async Task<Company> Get(int valId) {
             Company vCompany = await _dbContext.Companies.FindAsync(valId);
             if (vCompany is null) {
-                throw new ApplicationException("No Company");
+                throw new ApplicationException(L["Company:DoesNotExist", valId]);
             }
             return vCompany;
         }

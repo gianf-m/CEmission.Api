@@ -1,0 +1,5 @@
+{
+  "Company:DoesNotExist": "No existe la compañia con Id {0}",
+  "Emission:DoesNotExist": "No existe la emisión con Id {0}",
+  "IdentityUser:DoesNotExist": "No existe el usuario con {0} {1}"
+}

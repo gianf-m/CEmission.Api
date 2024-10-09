@@ -1,0 +1,5 @@
+{
+  "Company:DoesNotExist": "There is no company with id {0}",
+  "Emission:DoesNotExist": "There is no emission with id {0}",
+  "IdentityUser:DoesNotExist": "There is no IdentityUser with {0} {1}"
+}

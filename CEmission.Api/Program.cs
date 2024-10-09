@@ -4,13 +4,17 @@ using CEmission.DbMigrator;
 using CEmission.Emissions;
 using CEmission.EntityFramework;
 using CEmission.IdentityUsers;
+using CEmission.Localization;
 using CEmission.LoginAppServices;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using Serilog.Events;
+using System.Globalization;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -111,6 +115,11 @@ if (builder.Configuration.GetValue<bool>("App:EnableCors")) {
 }
 #endregion
 
+builder.Services.AddLocalization();
+builder.Services.AddSingleton<LocalizerMiddleware>();
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSingleton<IStringLocalizerFactory, JsonStringLocalizerFactory>();
+
 var app = builder.Build();
 
 app.UseSwagger();
@@ -120,6 +129,12 @@ app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+var options = new RequestLocalizationOptions {
+    DefaultRequestCulture = new RequestCulture(new CultureInfo("es-ES"))
+};
+
+app.UseRequestLocalization(options);
 
 app.UseExceptionHandler();
 

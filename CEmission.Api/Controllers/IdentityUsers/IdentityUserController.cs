@@ -9,6 +9,7 @@ namespace CEmission.IdentityUsers {
     [ControllerName("IdentityUser")]
     [Route("api/app/identityUser")]
     [Authorize]
+
     public class IdentityUserController : Controller, IIdentityUserAppServices {
         private readonly IIdentityUserAppServices _identityUserAppServices;
         public IdentityUserController(IIdentityUserAppServices identityUserAppServices) {
@@ -18,6 +19,11 @@ namespace CEmission.IdentityUsers {
         [HttpPost]
         public Task<IdentityUserDto> CreateAsync(IdentityUserCreateDto valCreateUserDto) {
             return _identityUserAppServices.CreateAsync(valCreateUserDto);
+        }
+
+        [HttpGet]
+        public Task<IdentityUserDto> GetAsync(Guid valId) {
+            return _identityUserAppServices.GetAsync(valId);
         }
 
 

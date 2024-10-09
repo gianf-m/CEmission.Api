@@ -19,5 +19,9 @@ namespace CEmission.IdentityUsers {
             await _identityUserRepository.CreateAsync(vNewUser);
             return ObjectMapper.Map<IdentityUserDto>(vNewUser);
         }
+
+        public virtual async Task<IdentityUserDto> GetAsync(Guid valId) {
+            return ObjectMapper.Map<IdentityUserDto>(await _identityUserRepository.GetAsync(valId));
+        }
     }
 }
