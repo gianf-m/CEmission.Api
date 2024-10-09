@@ -43,5 +43,9 @@ El endpoint libre es el LoginController para poder generar el token JWT y accede
 
 Una vez generado el token, copiarlo en la sección de Authorize de swagger con la palabra Bearer + Token y se accede a los demas endpoints.
 
+Para realizar las pruebas unitarias, solo se debe ejecutar la acción de "run test" en el menu de pruebas.
+Los unit test tienen el header JWT del usuario master creado por defecto.
+
+
 
 
